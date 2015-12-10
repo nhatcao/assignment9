@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
@@ -7,3 +8,13 @@
 	<classpathentry kind="lib" path="lib/jgroups-3.6.6.Final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="k20jwhiteboard-master/src"/>
+	<classpathentry kind="lib" path="k20jwhiteboard-master/bin/jgroups-3.6.6.Final.jar"/>
+	<classpathentry kind="lib" path="k20jwhiteboard-master/lib/jgroups-3.6.6.Final.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+>>>>>>> 700b4fe667595ddad7a6d2860bb51a1794ac1f81
