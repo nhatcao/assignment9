@@ -39,7 +39,7 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 			colorbrushButton;
 	private final Random random = new Random(System.currentTimeMillis());
 	private final Font defaultFont = new Font("Helvetica", Font.PLAIN, 12);
-	private final Color drawColor = Color.black;
+	private Color drawColor = Color.black;
 	private Color backgroundColor = Color.white;
 	boolean noChannel = false;
 	boolean jmx;
@@ -234,16 +234,13 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 	 * Show help on Console screen
 	 */
 	static void help() {
-		System.out
-				.print("\nDraw [-help] [-no_channel] [-props <protocol stack definition>]"
+		System.out.print("\nDraw [-help] [-no_channel] [-props <protocol stack definition>]"
 						+ " [-clustername <name>] [-state] [-timeout <state timeout>] [-use_unicasts] "
 						+ "[-bind_addr <addr>] [-jmx <true | false>] [-name <logical name>] [-send_own_state_on_merge true|false] "
 						+ "[-uuid <UUID>]");
-		System.out
-				.print("-no_channel: doesn't use JGroups at all, any drawing will be relected on the "
+		System.out.print("-no_channel: doesn't use JGroups at all, any drawing will be relected on the "
 						+ "whiteboard directly");
-		System.out
-				.print("-props: argument can be an old-style protocol stack specification, or it can be "
+		System.out.print("-props: argument can be an old-style protocol stack specification, or it can be "
 						+ "a URL. In the latter case, the protocol specification will be read from the URL\n");
 	}
 
@@ -284,8 +281,8 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 		subPanel = new JPanel();
 		mainFrame.getContentPane().add("Center", drawPanel);
 		colorbrushButton = new JButton("Brush color");
-				colorbrushButton.setFont(defaultFont);
-				colorbrushButton.addActionListener(this);
+		colorbrushButton.setFont(defaultFont);
+		colorbrushButton.addActionListener(this);
 		clearButton = new JButton("Clear");
 		clearButton.setFont(defaultFont);
 		clearButton.addActionListener(this);
@@ -295,7 +292,6 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 		colorbackgroundButton = new JButton("Background color");
 		colorbackgroundButton.setFont(defaultFont);
 		colorbackgroundButton.addActionListener(this);
-
 		BrSize = new JLabel("Choose Brush Size");
 		BrPx = new JLabel("Px");
 		String[] sList = { "5", "10", "15", "20", "25", "30" };
@@ -480,6 +476,18 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 			sendClearPanelMsg();
 		} else if ("Leave".equals(command)) {
 			stop();
+		}else if ("Background color".equals(command)){
+			Color cbackground = JColorChooser.showDialog(null,"Choose Background Color",Color.WHITE);	
+			Point p = mainFrame.getLocation();
+			mainFrame.dispose();
+			backgroundColor = cbackground;
+			try {
+				go();
+				mainFrame.setLocation(p);
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
 		} else
 			System.out.println("Unknown action");
 	}
@@ -617,7 +625,7 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 					Point point = entry.getKey();
 					Color col = entry.getValue();
 					dos.writeInt(point.x);
-					dos.writeInt(point.x);
+					dos.writeInt(point.y);
 					dos.writeInt(col.getRGB());
 				}
 				dos.flush();
@@ -683,7 +691,7 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 		 * send Draw command as a message to member of Group
 		 */
 		public void mouseDragged(MouseEvent e) {
-			int x = e.getX(), y = e.getX();
+			int x = e.getX(), y = e.getY();
 			DrawCommand comm = new DrawCommand(DrawCommand.DRAW, x, y,
 					drawColor.getRGB());
 
