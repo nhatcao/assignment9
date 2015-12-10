@@ -286,7 +286,7 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 		clearButton = new JButton("Clear");
 		clearButton.setFont(defaultFont);
 		clearButton.addActionListener(this);
-		leaveButton = new JButton("Leave");
+		leaveButton = new JButton("Exit");
 		leaveButton.setFont(defaultFont);
 		leaveButton.addActionListener(this);
 		colorbackgroundButton = new JButton("Background color");
@@ -474,7 +474,7 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener,
 				return;
 			}
 			sendClearPanelMsg();
-		} else if ("Leave".equals(command)) {
+		} else if ("Exit".equals(command)) {
 			stop();
 		}else if ("Background color".equals(command)){
 			Color cbackground = JColorChooser.showDialog(null,"Choose Background Color",Color.WHITE);	
